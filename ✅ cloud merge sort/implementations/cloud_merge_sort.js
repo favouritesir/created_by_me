@@ -1,88 +1,102 @@
 /**
- * Cloud Merge Sort - JavaScript Implementation
- * Conceived by: Ashikur Rahman (Spring 2023, Green University of Bangladesh)
+ * ============================================================================
+ * Cloud Merge Sort vs Standard Merge Sort (JavaScript Implementation)
+ * ============================================================================
+ * Author: Ashikur Rahman (Spring 2023, Green University of Bangladesh)
+ *
+ * This file contains BOTH clean implementations side-by-side without any
+ * benchmark/test instrumentation overhead.
+ * ============================================================================
  */
 
-/**
- * Core Cloud Merge Routine
- * @param {number} l - Left boundary
- * @param {number} m - Midpoint
- * @param {number} r - Right boundary
- * @param {Array} arr - The Ground array
- * @param {Array} cloud - The Overhead Cloud buffer
- */
+/* ============================================================================
+ * 1. CLOUD MERGE SORT (Ashikur Rahman)
+ *    - Auxiliary buffer: ceil(N / 2) elements
+ *    - Merge loops: exactly 3 loops
+ * ============================================================================ */
+
 function cMerge(l, m, r, arr, cloud) {
     if (arr[m] <= arr[m + 1]) return;
 
+    // Phase 1: Lift left-half elements to overhead cloud
     let lp = l;
-    let rp = m + 1;
-    let step = 0;
-
-    // Phase 1: Ascend left-half ground elements to overhead cloud
+    let cloudLen = 0;
     while (lp <= m) {
-        cloud[step++] = arr[lp++];
+        cloud[cloudLen++] = arr[lp++];
     }
 
-    // Phase 2: In-situ battle between cloud and right-half ground
-    lp = 0;
-    while (lp < step && rp <= r) {
-        if (cloud[lp] <= arr[rp]) {
-            arr[l++] = cloud[lp++];
+    // Phase 2: In-situ battle between overhead cloud and ground right-half
+    let cp = 0;
+    let rp = m + 1;
+    while (cp < cloudLen && rp <= r) {
+        if (cloud[cp] <= arr[rp]) {
+            arr[l++] = cloud[cp++];
         } else {
             arr[l++] = arr[rp++];
         }
     }
 
-    // Phase 3: Descend any remaining cloud elements back to ground
-    // Note: If cloud drains first, right-half is ALREADY in final place! Zero moves!
-    while (lp < step) {
-        arr[l++] = cloud[lp++];
+    // Phase 3: Descend remaining cloud elements
+    // (If cloud finishes first, right-half is already in final place: 0 moves!)
+    while (cp < cloudLen) {
+        arr[l++] = cloud[cp++];
     }
 }
 
-function cloudMergeSortRecursive(l, r, arr, cloud) {
+function cloudMergeSortRec(l, r, arr, cloud) {
     if (l < r) {
         const mid = Math.floor((l + r) / 2);
-        cloudMergeSortRecursive(l, mid, arr, cloud);
-        cloudMergeSortRecursive(mid + 1, r, arr, cloud);
+        cloudMergeSortRec(l, mid, arr, cloud);
+        cloudMergeSortRec(mid + 1, r, arr, cloud);
         cMerge(l, mid, r, arr, cloud);
     }
 }
 
-/**
- * Public Cloud Merge Sort API
- * @param {Array} arr - Array to sort in-place
- */
 function cloudMergeSort(arr) {
     const n = arr.length;
     if (n <= 1) return arr;
-
-    // Single shared overhead cloud allocation: exactly ceil(N / 2)
     const cloud = new Array(Math.ceil(n / 2));
-    cloudMergeSortRecursive(0, n - 1, arr, cloud);
+    cloudMergeSortRec(0, n - 1, arr, cloud);
     return arr;
 }
 
-/**
- * Standard Merge Sort (Included for comparison)
- */
+
+/* ============================================================================
+ * 2. STANDARD TEXTBOOK MERGE SORT (Canonical Reference)
+ *    - Auxiliary buffer: full N elements
+ *    - Merge loops: 4 loops
+ * ============================================================================ */
+
 function standardMerge(l, m, r, arr, temp) {
     if (arr[m] <= arr[m + 1]) return;
-    let lp = l, rp = m + 1, k = l;
+
+    let lp = l;
+    let rp = m + 1;
+    let k = l;
+
+    // Loop 1: Compare into temp
     while (lp <= m && rp <= r) {
         if (arr[lp] <= arr[rp]) temp[k++] = arr[lp++];
         else temp[k++] = arr[rp++];
     }
+
+    // Loop 2: Drain left half into temp
     while (lp <= m) temp[k++] = arr[lp++];
+
+    // Loop 3: Drain right half into temp (mandatory in standard!)
     while (rp <= r) temp[k++] = arr[rp++];
-    for (let i = l; i <= r; i++) arr[i] = temp[i];
+
+    // Loop 4: Copy entire merged range back from temp to arr
+    for (let i = l; i <= r; i++) {
+        arr[i] = temp[i];
+    }
 }
 
-function standardMergeSortRecursive(l, r, arr, temp) {
+function standardMergeSortRec(l, r, arr, temp) {
     if (l < r) {
         const mid = Math.floor((l + r) / 2);
-        standardMergeSortRecursive(l, mid, arr, temp);
-        standardMergeSortRecursive(mid + 1, r, arr, temp);
+        standardMergeSortRec(l, mid, arr, temp);
+        standardMergeSortRec(mid + 1, r, arr, temp);
         standardMerge(l, mid, r, arr, temp);
     }
 }
@@ -91,19 +105,24 @@ function standardMergeSort(arr) {
     const n = arr.length;
     if (n <= 1) return arr;
     const temp = new Array(n);
-    standardMergeSortRecursive(0, n - 1, arr, temp);
+    standardMergeSortRec(0, n - 1, arr, temp);
     return arr;
 }
 
-// Module exports for test runners
+
+/* ============================================================================
+ * EXPORTS & CLI DEMO
+ * ============================================================================ */
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { cloudMergeSort, standardMergeSort, cMerge };
+    module.exports = { cloudMergeSort, standardMergeSort, cMerge, standardMerge };
 }
 
-// Demo CLI run
 if (typeof require !== 'undefined' && require.main === module) {
-    const demo = [38, 27, 43, 3, 9, 82, 10];
-    console.log("Original:", demo);
-    cloudMergeSort(demo);
-    console.log("Cloud Sorted:", demo);
+    const a1 = [38, 27, 43, 3, 9, 82, 10];
+    const a2 = [38, 27, 43, 3, 9, 82, 10];
+    console.log("Original:     ", a1);
+    cloudMergeSort(a1);
+    console.log("Cloud Sorted:   ", a1);
+    standardMergeSort(a2);
+    console.log("Standard Sorted:", a2);
 }
