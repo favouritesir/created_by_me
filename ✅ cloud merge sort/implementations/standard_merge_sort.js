@@ -5,11 +5,7 @@
  */
 
 function standardMerge(l, m, r, arr, temp) {
-    if (arr[m] <= arr[m + 1]) return;
-
-    let lp = l;
-    let rp = m + 1;
-    let k = l;
+    let lp = l, rp = m + 1, k = l;
 
     while (lp <= m && rp <= r) {
         if (arr[lp] <= arr[rp]) temp[k++] = arr[lp++];
@@ -24,30 +20,21 @@ function standardMerge(l, m, r, arr, temp) {
     }
 }
 
-function standardMergeSortRec(l, r, arr, temp) {
+function standardMergeSort(arr, l, r, temp) {
+    if (l === undefined) {
+        l = 0;
+        r = arr.length - 1;
+        temp = new Array(arr.length);
+    }
     if (l < r) {
         const mid = Math.floor((l + r) / 2);
-        standardMergeSortRec(l, mid, arr, temp);
-        standardMergeSortRec(mid + 1, r, arr, temp);
+        standardMergeSort(arr, l, mid, temp);
+        standardMergeSort(arr, mid + 1, r, temp);
         standardMerge(l, mid, r, arr, temp);
     }
-}
-
-function standardMergeSort(arr) {
-    const n = arr.length;
-    if (n <= 1) return arr;
-    const temp = new Array(n);
-    standardMergeSortRec(0, n - 1, arr, temp);
     return arr;
 }
 
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { standardMergeSort, standardMerge };
-}
-
-if (typeof require !== 'undefined' && require.main === module) {
-    const demo = [38, 27, 43, 3, 9, 82, 10];
-    console.log("Original:       ", demo);
-    standardMergeSort(demo);
-    console.log("Standard Sorted:", demo);
 }

@@ -12,7 +12,11 @@ Tests:
 
 import random
 import time
-from implementations.cloud_merge_sort import cloud_merge_sort
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from implementations.cloud_merge_sort import cloud_sort
 from implementations.standard_merge_sort import standard_merge_sort
 
 def run_tests():
@@ -34,7 +38,7 @@ def run_tests():
     ]
     for idx, ec in enumerate(edge_cases):
         arr = list(ec)
-        cloud_merge_sort(arr)
+        cloud_sort(arr)
         assert arr == sorted(ec), f"Edge case {idx} failed!"
     print(f"  ✔ All {len(edge_cases)} Edge Cases PASSED.")
 
@@ -47,7 +51,7 @@ def run_tests():
         expected = sorted(original)
         
         arr = list(original)
-        cloud_merge_sort(arr)
+        cloud_sort(arr)
         
         if arr != expected:
             raise AssertionError(f"Differential mismatch at trial {trial}!")
@@ -61,7 +65,7 @@ def run_tests():
 
     arr_cloud = list(base)
     t0 = time.perf_counter()
-    cloud_merge_sort(arr_cloud)
+    cloud_sort(arr_cloud)
     t1 = time.perf_counter()
     cloud_sec = t1 - t0
 

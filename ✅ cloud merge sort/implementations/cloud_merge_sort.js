@@ -1,59 +1,55 @@
 /**
  * ============================================================================
- * Cloud Merge Sort (JavaScript Implementation)
+ * Cloud Sort (JavaScript Implementation)
  * ============================================================================
  * Conceived by: Ashikur Rahman (Spring 2023, Green University of Bangladesh)
+ *
+ * Core Concept:
+ *   - Ground Array (arr) : Primary in-situ array to sort
+ *   - Overhead Cloud     : Passed by caller, size ceil(N / 2)
  * ============================================================================
  */
 
-function cMerge(l, m, r, arr, cloud) {
-    if (arr[m] <= arr[m + 1]) return;
+function cloudMerge(l, m, r, arr, cloud) {
+    let lp = l, rp = m + 1, step = 0;
 
-    let lp = l;
-    let cloudLen = 0;
+    // Phase 1: arr[l..m] ascends to cloud
     while (lp <= m) {
-        cloud[cloudLen++] = arr[lp++];
+        cloud[step++] = arr[lp++];
     }
 
-    let cp = 0;
-    let rp = m + 1;
-    while (cp < cloudLen && rp <= r) {
-        if (cloud[cp] <= arr[rp]) {
-            arr[l++] = cloud[cp++];
+    // Phase 2: In-situ merge between cloud and ground
+    lp = 0;
+    while (lp < step && rp <= r) {
+        if (cloud[lp] <= arr[rp]) {
+            arr[l++] = cloud[lp++];
         } else {
             arr[l++] = arr[rp++];
         }
     }
 
-    while (cp < cloudLen) {
-        arr[l++] = cloud[cp++];
+    // Phase 3: Drain remaining cloud elements (ground right tail needs 0 moves)
+    while (lp < step) {
+        arr[l++] = cloud[lp++];
     }
 }
 
-function cloudMergeSortRec(l, r, arr, cloud) {
+function cloudSort(arr, l, r, cloud) {
+    if (l === undefined) {
+        // Ergonomic caller default: cloudSort(arr)
+        l = 0;
+        r = arr.length - 1;
+        cloud = new Array(Math.ceil(arr.length / 2));
+    }
     if (l < r) {
         const mid = Math.floor((l + r) / 2);
-        cloudMergeSortRec(l, mid, arr, cloud);
-        cloudMergeSortRec(mid + 1, r, arr, cloud);
-        cMerge(l, mid, r, arr, cloud);
+        cloudSort(arr, l, mid, cloud);
+        cloudSort(arr, mid + 1, r, cloud);
+        cloudMerge(l, mid, r, arr, cloud);
     }
-}
-
-function cloudMergeSort(arr) {
-    const n = arr.length;
-    if (n <= 1) return arr;
-    const cloud = new Array(Math.ceil(n / 2));
-    cloudMergeSortRec(0, n - 1, arr, cloud);
     return arr;
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { cloudMergeSort, cMerge };
-}
-
-if (typeof require !== 'undefined' && require.main === module) {
-    const demo = [38, 27, 43, 3, 9, 82, 10];
-    console.log("Original:    ", demo);
-    cloudMergeSort(demo);
-    console.log("Cloud Sorted:", demo);
+    module.exports = { cloudSort, cloudMerge };
 }

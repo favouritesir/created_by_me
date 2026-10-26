@@ -5,9 +5,6 @@ Standard Textbook Merge Sort (Python Implementation)
 """
 
 def standard_merge(l, m, r, arr, temp):
-    if arr[m] <= arr[m + 1]:
-        return
-
     lp = l
     rp = m + 1
     k = l
@@ -35,25 +32,14 @@ def standard_merge(l, m, r, arr, temp):
         arr[i] = temp[i]
 
 
-def _standard_merge_sort_rec(l, r, arr, temp):
+def standard_merge_sort(arr, l=0, r=None, temp=None):
+    if r is None:
+        r = len(arr) - 1
+        temp = [None] * len(arr)
+
     if l < r:
         mid = (l + r) // 2
-        _standard_merge_sort_rec(l, mid, arr, temp)
-        _standard_merge_sort_rec(mid + 1, r, arr, temp)
+        standard_merge_sort(arr, l, mid, temp)
+        standard_merge_sort(arr, mid + 1, r, temp)
         standard_merge(l, mid, r, arr, temp)
-
-
-def standard_merge_sort(arr):
-    n = len(arr)
-    if n <= 1:
-        return arr
-    temp = [None] * n
-    _standard_merge_sort_rec(0, n - 1, arr, temp)
     return arr
-
-
-if __name__ == "__main__":
-    demo = [38, 27, 43, 3, 9, 82, 10, 19, 50, 61]
-    print("Original:       ", demo)
-    standard_merge_sort(demo)
-    print("Standard Sorted:", demo)

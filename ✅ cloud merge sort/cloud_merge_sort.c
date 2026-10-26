@@ -1,75 +1,45 @@
 /**
  * ============================================================================
- * Cloud Merge Sort (C Reference)
+ * Cloud Sort (C Reference)
  * ============================================================================
  * Conceived by: Ashikur Rahman (Spring 2023, Green University of Bangladesh)
  *
- * Architecture:
- *   - Ground Array (arr)  : The in-situ buffer where recursive partitioning occurs
- *   - Overhead Cloud      : A single floating buffer allocated once at root
+ * Core Concept:
+ *   - Ground Array (arr) : Primary in-situ array to sort
+ *   - Overhead Cloud     : A caller-passed floating buffer of size ceil(N / 2)
+ *                          Zero malloc/free needed; pure pedagogical elegance.
  * ============================================================================
  */
 
-#include <stdio.h>
-#include <stdlib.h>
+void cloud_merge(int arr[], int l, int m, int r, int cloud[]) {
+    int lp = l, rp = m + 1, step = 0;
 
-void c_merge(int arr[], int l, int m, int r, int cloud[]) {
-    if (arr[m] <= arr[m + 1]) return;
-
-    int lp = l;
-    int cloud_len = 0;
+    // Phase 1: arr[l..m] temporarily ascends to overhead cloud
     while (lp <= m) {
-        cloud[cloud_len++] = arr[lp++];
+        cloud[step++] = arr[lp++];
     }
 
-    int cp = 0;
-    int rp = m + 1;
-    while (cp < cloud_len && rp <= r) {
-        if (cloud[cp] <= arr[rp]) {
-            arr[l++] = cloud[cp++];
+    // Phase 2: In-situ merge between overhead cloud and ground
+    lp = 0;
+    while (lp < step && rp <= r) {
+        if (cloud[lp] <= arr[rp]) {
+            arr[l++] = cloud[lp++];
         } else {
             arr[l++] = arr[rp++];
         }
     }
 
-    while (cp < cloud_len) {
-        arr[l++] = cloud[cp++];
+    // Phase 3: Unload remaining cloud elements (ground right tail needs 0 moves)
+    while (lp < step) {
+        arr[l++] = cloud[lp++];
     }
 }
 
-static void cloud_merge_sort_rec(int arr[], int l, int r, int cloud[]) {
+void cloud_sort(int arr[], int l, int r, int cloud[]) {
     if (l < r) {
         int mid = l + (r - l) / 2;
-        cloud_merge_sort_rec(arr, l, mid, cloud);
-        cloud_merge_sort_rec(arr, mid + 1, r, cloud);
-        c_merge(arr, l, mid, r, cloud);
+        cloud_sort(arr, l, mid, cloud);
+        cloud_sort(arr, mid + 1, r, cloud);
+        cloud_merge(arr, l, mid, r, cloud);
     }
-}
-
-void cloud_merge_sort(int arr[], int n) {
-    if (n <= 1) return;
-    int cloud_size = (n + 1) / 2;
-    int *cloud = (int *)malloc(cloud_size * sizeof(int));
-    if (!cloud) return;
-
-    cloud_merge_sort_rec(arr, 0, n - 1, cloud);
-
-    free(cloud);
-}
-
-int main() {
-    int arr[] = {38, 27, 43, 3, 9, 82, 10, 19, 50, 61};
-    int n = sizeof(arr) / sizeof(arr[0]);
-
-    printf("Original Array:\n  ");
-    for (int i = 0; i < n; i++) printf("%d ", arr[i]);
-    printf("\n\n");
-
-    cloud_merge_sort(arr, n);
-
-    printf("Sorted with Cloud Merge Sort:\n  ");
-    for (int i = 0; i < n; i++) printf("%d ", arr[i]);
-    printf("\n");
-
-    return 0;
 }

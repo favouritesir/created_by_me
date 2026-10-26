@@ -60,13 +60,13 @@ This repository archives original algorithmic contributions designed to solve fo
 
 ---
 
-### 2. 🌩️ [Cloud Merge Sort](✅%20cloud%20merge%20sort/)
-*An overhead single-buffer in-situ merge sort challenging standard textbook memory waste by reducing auxiliary space to $\lceil N/2 \rceil$, saving 25% memory bus energy, and eliminating the right-hand drain loop.*
+### 2. 🌩️ [Cloud Sort](✅%20cloud%20merge%20sort/)
+*An overhead single-buffer in-situ merge sort challenging standard textbook memory waste by reducing auxiliary space to $\lceil N/2 \rceil$, eliminating dynamic `malloc` overhead, saving 25% memory bus energy, and eliminating the right-hand drain loop.*
 
 - **Origin & Provenance:** Conceived in **Spring 2023** during the *Data Structures & Algorithms* semester at the **Department of CSE, Green University of Bangladesh** (Ashikur Rahman).
-- **The Breakthrough:** Standard textbooks mandate allocating $N$ auxiliary slots and executing 4 loops (with $2N$ data moves per merge). Cloud Merge Sort introduces an **Asymmetric Overhead Interaction**: the active sub-range `arr[l..m]` temporarily ascends to a floating overhead $\lceil N/2 \rceil$ "cloud" buffer to vacate ground writing slots, while `arr[m+1..r]` remains directly on the ground in-situ.
+- **The Breakthrough:** Standard textbooks mandate allocating $N$ auxiliary slots with complex dynamic `malloc`/`free` routines and executing 4 loops. Cloud Sort allows the caller to provide a simple overhead `cloud` buffer of size $\lceil N/2 \rceil$. The active slice `arr[l..m]` temporarily ascends to the cloud to vacate ground writing slots, while `arr[m+1..r]` remains directly on the ground in-situ.
 - **Loop Economy:** Uses only **3 loops** instead of 4. The ground drain loop is completely eliminated (**Zero-Move Right Tail Property**).
-- **Embedded & IoT Energy Efficiency:** Reduces SRAM write bus activity by **25.0%**, cutting dynamic power dissipation and extending battery lifespan on microcontrollers (Arduino Uno / ATmega328P). Delivers **28% faster throughput** with safe execution where standard merge sort triggers out-of-memory crashes.
+- **Embedded & IoT Energy Efficiency:** Reduces SRAM write bus activity by **25.0%**, cutting dynamic power dissipation and extending battery lifespan on microcontrollers (Arduino Uno / ATmega328P). Delivers **25% faster throughput** with safe execution where standard merge sort triggers out-of-memory crashes.
 - **Stability & Safety:** Strictly stable sort, mathematically proven read-before-write safety invariant ($L_t \le R_t$), and verified across **10,000 random arrays** against V8 Native TimSort with **100.0000% precision**.
 - **Languages Provided:** C (Reference), JavaScript (Node.js), Python 3.
 - 👉 **[Explore Project & Full Documentation &raquo;](✅%20cloud%20merge%20sort/)**
@@ -80,7 +80,7 @@ This repository is continuously expanding with ongoing research and original alg
 | Project | Domain | Core Innovation / Research Goal | Status |
 | :--- | :--- | :--- | :---: |
 | **In-Place Infix to Prefix** | Compiler Design & Expression Parsing | Dual-pointer backward in-place conversion with $O(1)$ auxiliary string space. | 🏆 Published (DOI: 10.5281/zenodo.23657544) |
-| **Cloud Merge Sort** | Sorting Pedagogy & Embedded Optimization | Overhead-buffer in-situ merge sort with $\lceil N/2 \rceil$ space, 25% energy savings, and zero-move tail. | ✅ Complete & Verified |
+| **Cloud Sort** | Sorting Pedagogy & Embedded Optimization | Overhead-buffer in-situ merge sort with $\lceil N/2 \rceil$ space, zero-malloc simplicity, and zero-move tail. | ✅ Complete & Verified |
 | **JSON Boundary Tracker** | High-Throughput Parsing | Zero-copy stream tokenization and lexical boundary detection without AST heap overhead. | 🔬 In Design |
 | **Adaptive In-Place Cache Eviction** | Operating Systems & Caching | Low-overhead pointer-indexed cache replacement for resource-constrained micro-kernels. | 💡 Planned |
 | **Bounded Stack Math Evaluator** | Embedded Firmware | Fixed-depth evaluation of mathematical trees with guaranteed zero-overflow guarantees. | 💡 Planned |

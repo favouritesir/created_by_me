@@ -11,7 +11,7 @@
  * ============================================================================
  */
 
-const { cloudMergeSort } = require('../implementations/cloud_merge_sort.js');
+const { cloudSort } = require('../implementations/cloud_merge_sort.js');
 const { standardMergeSort } = require('../implementations/standard_merge_sort.js');
 
 // Seeded PRNG for reproducible test runs
@@ -55,7 +55,7 @@ function quickSortInstrumented(arr, tracker) {
 // Instrumented Cloud Merge Sort
 function cloudMergeSortInstrumented(arr, tracker) {
     const cloud = new Array(Math.ceil(arr.length / 2));
-    function cMerge(l, m, r) {
+    function cloudMerge(l, m, r) {
         tracker.compares++;
         if (arr[m] <= arr[m + 1]) return;
         let lp = l, rp = m + 1, step = 0;
@@ -83,7 +83,7 @@ function cloudMergeSortInstrumented(arr, tracker) {
             const mid = Math.floor((l + r) / 2);
             rec(l, mid);
             rec(mid + 1, r);
-            cMerge(l, mid, r);
+            cloudMerge(l, mid, r);
         }
     }
     rec(0, arr.length - 1);
@@ -138,7 +138,7 @@ const edgeCases = [
 edgeCases.forEach((ec, idx) => {
     const copy = [...ec];
     const expected = [...ec].sort((a, b) => a - b);
-    cloudMergeSort(copy);
+    cloudSort(copy);
     for (let i = 0; i < copy.length; i++) {
         if (copy[i] !== expected[i]) {
             console.error(`FAIL: Edge case ${idx} mismatch!`);
@@ -160,7 +160,7 @@ for (let trial = 0; trial < TOTAL_TRIALS; trial++) {
     const arr1 = [...original];
     const arr2 = [...original].sort((a, b) => a - b);
 
-    cloudMergeSort(arr1);
+    cloudSort(arr1);
 
     for (let i = 0; i < len; i++) {
         if (arr1[i] !== arr2[i]) {
@@ -182,7 +182,7 @@ const stabInput = Array.from({ length: STAB_N }, (_, idx) => ({
 
 function cloudMergeSortStable(arr) {
     const cloud = new Array(Math.ceil(arr.length / 2));
-    function cMerge(l, m, r) {
+    function cloudMerge(l, m, r) {
         if (arr[m].key <= arr[m + 1].key) return;
         let lp = l, rp = m + 1, step = 0;
         while (lp <= m) cloud[step++] = arr[lp++];
@@ -199,7 +199,7 @@ function cloudMergeSortStable(arr) {
             const mid = Math.floor((l + r) / 2);
             rec(l, mid);
             rec(mid + 1, r);
-            cMerge(l, mid, r);
+            cloudMerge(l, mid, r);
         }
     }
     rec(0, arr.length - 1);
@@ -252,7 +252,7 @@ const bStd = [...benchBase];
 const bTim = [...benchBase];
 
 const t0 = process.hrtime.bigint();
-cloudMergeSort(bCloud);
+cloudSort(bCloud);
 const t1 = process.hrtime.bigint();
 const cloudMs = Number(t1 - t0) / 1e6;
 
