@@ -64,6 +64,7 @@ This repository archives original algorithmic contributions designed to solve fo
 *An overhead single-buffer in-situ merge sort challenging standard textbook memory waste by reducing auxiliary space to $\lceil N/2 \rceil$, eliminating dynamic `malloc` overhead, saving 25% memory bus energy, and eliminating the right-hand drain loop.*
 
 - **Origin & Provenance:** Conceived in **Spring 2023** during the *Data Structures & Algorithms* semester at the **Department of CSE, Green University of Bangladesh** (Ashikur Rahman).
+  - 📄 **Academic Paper:** [Read the full research paper (PAPER.md)](✅%20cloud%20merge%20sort/PAPER.md)
 - **The Breakthrough:** Standard textbooks mandate allocating $N$ auxiliary slots with complex dynamic `malloc`/`free` routines and executing 4 loops. Cloud Sort allows the caller to provide a simple overhead `cloud` buffer of size $\lceil N/2 \rceil$. The active slice `arr[l..m]` temporarily ascends to the cloud to vacate ground writing slots, while `arr[m+1..r]` remains directly on the ground in-situ.
 - **Loop Economy:** Uses only **3 loops** instead of 4. The ground drain loop is completely eliminated (**Zero-Move Right Tail Property**).
 - **Embedded & IoT Energy Efficiency:** Reduces SRAM write bus activity by **25.0%**, cutting dynamic power dissipation and extending battery lifespan on microcontrollers (Arduino Uno / ATmega328P). Delivers **25% faster throughput** with safe execution where standard merge sort triggers out-of-memory crashes.
