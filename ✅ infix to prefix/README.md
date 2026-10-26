@@ -10,9 +10,11 @@
 ![Space Complexity](https://img.shields.io/badge/String_Space-O(1)-blue?style=for-the-badge)
 ![Tests](https://img.shields.io/badge/Tested-40,000_expressions-brightgreen?style=for-the-badge)
 ![Created](https://img.shields.io/badge/Original_Design-Spring_2022-purple?style=for-the-badge)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.23657544-107c10.svg?style=for-the-badge&logo=doi)](https://doi.org/10.5281/zenodo.23657544)
 
 > **Author:** Ashikur Rahman  
 > **Original Algorithm Designed:** Spring 2022 (Green University of Bangladesh, CSE-104 Lab Report No. 01)  
+> **Academic Preprint (DOI):** [https://doi.org/10.5281/zenodo.23657544](https://doi.org/10.5281/zenodo.23657544)  
 > **Primary Source:** [2022 University Lab Report & Presentation (Google Slides)](https://docs.google.com/presentation/d/1ogiW8eGX2eApdnQU1bEeGhEWsG034DrZ7xZPR5uvhVY/edit?usp=sharing)  
 > **Refactored, Multi-Language Ports & 3-Layer Testing:** 2026  
 

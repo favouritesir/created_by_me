@@ -1,6 +1,7 @@
 # 🚀 Created By Me | Original Algorithms & Systems Research
 
 [![Author](https://img.shields.io/badge/Author-Ashikur_Rahman-blue.svg?style=for-the-badge&logo=github)](https://github.com/favouritesir)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.23657544-107c10.svg?style=for-the-badge&logo=doi)](https://doi.org/10.5281/zenodo.23657544)
 [![Established](https://img.shields.io/badge/Origin-2022_--_Present-purple.svg?style=for-the-badge)](https://github.com/favouritesir/created_by_me)
 [![Languages](https://img.shields.io/badge/Languages-C_|_JS_|_Python_|_Java_|_C%23-informational?style=for-the-badge)](https://github.com/favouritesir/created_by_me)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
@@ -50,6 +51,7 @@ This repository archives original algorithmic contributions designed to solve fo
 
 - **Origin & Provenance:** Conceived and submitted as **Lab Report No. 01 (Problem 2)** in **December 2022** for Course *CSE-104: Structured Programming Lab* at the **Department of CSE, Green University of Bangladesh** (Student: Ashikur Rahman, ID: 221902131; Lecturer: Md. Abu Rumman Refat).
   - 📑 [View Original 2022 Lab Report Presentation (Google Slides)](https://docs.google.com/presentation/d/1ogiW8eGX2eApdnQU1bEeGhEWsG034DrZ7xZPR5uvhVY/edit?usp=sharing)
+  - 📄 **Official Preprint (CERN/Zenodo DOI):** [10.5281/zenodo.23657544](https://doi.org/10.5281/zenodo.23657544)
 - **The Breakthrough:** Traditional textbook algorithms require 3 full string passes and an extra $O(N)$ buffer (Reverse $\rightarrow$ Postfix $\rightarrow$ Reverse). This algorithm performs the complete conversion **in-place** directly inside the original buffer using a backward read/write pointer discipline.
 - **Safety Proof:** Mathematically proves the invariant `read_idx <= write_idx`, guaranteeing unread data is never overwritten.
 - **Languages Provided:** C (Reference), JavaScript (Node.js), Python 3, Java, C#.
