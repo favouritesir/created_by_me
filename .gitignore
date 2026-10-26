@@ -14,3 +14,15 @@ __pycache__/
 
 # Publication drafts, research papers, and articles (Private / not pushed to GitHub)
 drafts/
+
+# Research paper LaTeX files, auxiliary builds, and PDFs (kept local, private from git)
+*.tex
+*.pdf
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
