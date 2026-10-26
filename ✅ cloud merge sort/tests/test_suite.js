@@ -242,13 +242,14 @@ console.log(`    • QuickSort      : ${tQuick.moves.toLocaleString()} data move
 const moveSavings = ((tStd.moves - tCloud.moves) / tStd.moves * 100).toFixed(1);
 console.log(`  ⭐ Data Move Savings: Cloud Merge eliminates ${moveSavings}% of Standard Merge data writes!`);
 
-// --- Layer 5: High-Scale Throughput Benchmark (100,000 Elements) ---
-console.log("\n[5/5] High-Scale Throughput Benchmark (100,000 elements)...");
+// --- Layer 5: High-Scale 4-Way Throughput Benchmark (100,000 Elements) ---
+console.log("\n[5/5] High-Scale 4-Way Throughput Benchmark (100,000 elements)...");
 const BENCH_N = 100000;
 const benchBase = Array.from({ length: BENCH_N }, () => Math.floor(rng() * 1000000));
 
 const bCloud = [...benchBase];
 const bStd = [...benchBase];
+const bQuick = [...benchBase];
 const bTim = [...benchBase];
 
 const t0 = process.hrtime.bigint();
@@ -262,13 +263,19 @@ const t3 = process.hrtime.bigint();
 const stdMs = Number(t3 - t2) / 1e6;
 
 const t4 = process.hrtime.bigint();
-bTim.sort((a, b) => a - b);
+quickSortInstrumented(bQuick, { moves: 0, compares: 0 });
 const t5 = process.hrtime.bigint();
-const timMs = Number(t5 - t4) / 1e6;
+const quickMs = Number(t5 - t4) / 1e6;
+
+const t6 = process.hrtime.bigint();
+bTim.sort((a, b) => a - b);
+const t7 = process.hrtime.bigint();
+const timMs = Number(t7 - t6) / 1e6;
 
 console.log(`  1. Cloud Merge Sort (N/2 buffer) : ${cloudMs.toFixed(2)} ms  ⚡ (FASTEST MERGE)`);
 console.log(`  2. Standard Merge Sort (N buffer): ${stdMs.toFixed(2)} ms`);
-console.log(`  3. Native V8 JS Sort (TimSort)   : ${timMs.toFixed(2)} ms`);
+console.log(`  3. QuickSort (In-Place)          : ${quickMs.toFixed(2)} ms`);
+console.log(`  4. Native V8 JS Sort (TimSort)   : ${timMs.toFixed(2)} ms`);
 
 const speedup = (((stdMs - cloudMs) / stdMs) * 100).toFixed(1);
 console.log(`  🚀 Cloud Merge throughput is ${speedup}% FASTER than Standard Merge!`);
