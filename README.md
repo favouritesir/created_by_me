@@ -83,7 +83,7 @@ This repository is continuously expanding with ongoing research and original alg
 | Project | Domain | Core Innovation / Research Goal | Status |
 | :--- | :--- | :--- | :---: |
 | **In-Place Infix to Prefix** | Compiler Design & Expression Parsing | Dual-pointer backward in-place conversion with $O(1)$ auxiliary string space. | 🏆 Published (DOI: 10.5281/zenodo.23657544) |
-| **Cloud Sort** | Sorting Pedagogy & Embedded Optimization | Overhead-buffer in-situ merge sort with $\lceil N/2 \rceil$ space, zero-malloc simplicity, and zero-move tail. | ✅ Complete & Verified |
+| **Cloud Sort** | Sorting Pedagogy & Embedded Optimization | Overhead-buffer in-situ merge sort with $\lceil N/2 \rceil$ space, zero-malloc simplicity, and zero-move tail. | 🏆 Paper & Benchmarks Complete |
 | **JSON Boundary Tracker** | High-Throughput Parsing | Zero-copy stream tokenization and lexical boundary detection without AST heap overhead. | 🔬 In Design |
 | **Adaptive In-Place Cache Eviction** | Operating Systems & Caching | Low-overhead pointer-indexed cache replacement for resource-constrained micro-kernels. | 💡 Planned |
 | **Bounded Stack Math Evaluator** | Embedded Firmware | Fixed-depth evaluation of mathematical trees with guaranteed zero-overflow guarantees. | 💡 Planned |
@@ -113,15 +113,22 @@ created_by_me/
 │       ├── test_suite.js              # Vector suite + differential random harness (JS)
 │       └── test_stress.py             # Full 40,000-expression 3-layer stress harness (Python)
 │
-└── ✅ cloud merge sort/                # Project 2: Cloud Merge Sort (Overhead-Buffer In-Situ)
-    ├── README.md                      # Comprehensive theory, flowcharts & hardware analysis
-    ├── cloud_merge_sort.c             # Pure Cloud Merge Sort in C (Reference)
+└── ✅ cloud merge sort/                # Project 2: Cloud Sort (Overhead-Buffer In-Situ)
+    ├── README.md                      # Comprehensive theory, benchmarks & embedded analysis
+    ├── PAPER.md                       # Formal academic research paper (peer-review format)
+    ├── ORIGIN_AND_JOURNEY.md          # Behind the scenes: Door-marker traces & inventor's journey
+    ├── cloud_merge_sort.c             # Pure Cloud Sort in C (Reference, caller-buffer model)
     ├── standard_merge_sort.c          # Pure Standard Merge Sort in C (Canonical comparison)
     │
+    ├── prototypes/                    # Precursor in-place & rotational experimental archive
+    │   ├── angle_inplace_experiment.js# Early ~70-80% in-place swap experiment (angleSort)
+    │   ├── c_inplace_cross_swap.c     # C-based boundary swap trial (test.c)
+    │   └── queue_merge_experiment.js  # Rotational queue-merge trial (cloudMarge.js)
+    │
     ├── implementations/               # Production multi-language standalone implementations
-    │   ├── cloud_merge_sort.js        # Pure Cloud Merge Sort (JavaScript)
+    │   ├── cloud_merge_sort.js        # Pure Cloud Sort (JavaScript)
     │   ├── standard_merge_sort.js     # Pure Standard Merge Sort (JavaScript)
-    │   ├── cloud_merge_sort.py        # Pure Cloud Merge Sort (Python 3)
+    │   ├── cloud_merge_sort.py        # Pure Cloud Sort (Python 3)
     │   └── standard_merge_sort.py     # Pure Standard Merge Sort (Python 3)
     │
     └── tests/                         # Verification & empirical hardware harness
