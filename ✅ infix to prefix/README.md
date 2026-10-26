@@ -12,7 +12,8 @@
 ![Created](https://img.shields.io/badge/Original_Design-Spring_2022-purple?style=for-the-badge)
 
 > **Author:** Ashikur Rahman  
-> **Original Algorithm Designed:** Spring 2022 (Data Structures Coursework)  
+> **Original Algorithm Designed:** Spring 2022 (Green University of Bangladesh, CSE-104 Lab Report No. 01)  
+> **Primary Source:** [2022 University Lab Report & Presentation (Google Slides)](https://docs.google.com/presentation/d/1ogiW8eGX2eApdnQU1bEeGhEWsG034DrZ7xZPR5uvhVY/edit?usp=sharing)  
 > **Refactored, Multi-Language Ports & 3-Layer Testing:** 2026  
 
 A high-performance, memory-optimized **In-Place Infix to Prefix Converter** in C. Unlike traditional textbook algorithms that allocate secondary arrays and perform multiple string reversals, this implementation utilizes a **backward two-pointer (Read/Write)** technique to overwrite the input buffer in-place with **zero auxiliary string allocation ($O(1)$ extra string memory)**.
@@ -356,4 +357,11 @@ Result (Prefix Expression): *-a/bc-/akl
 ---
 
 ## 📜 Origin Story
-This algorithm originated in Spring 2022 during university Data Structures coursework. It challenged the standard textbook technique (reverse-postfix-reverse) by proposing a dual-pointer in-place scan directly within the input buffer. Refactored in 2026 for production memory safety, standard conformance, and zero-allocation execution, and stress-validated on 40,000 randomized expressions across three independent verification layers.
+
+This algorithm originated in **Spring 2022** during undergraduate coursework at the **Department of Computer Science and Engineering (CSE), Green University of Bangladesh** (Course: *CSE-104 Structured Programming Lab*, supervised by Lecturer Md. Abu Rumman Refat; Student: Ashikur Rahman, ID: 221902131).
+
+The project was submitted as **Lab Report No. 01 (Problem 2)** on **December 1, 2022**, where it challenged the traditional textbook reduction (reverse $\rightarrow$ postfix $\rightarrow$ reverse) by proposing a direct backward scan writing in-place to the input array.
+
+- 📑 **Primary Historical Source:** [View Original 2022 University Lab Report & Slides (Google Slides)](https://docs.google.com/presentation/d/1ogiW8eGX2eApdnQU1bEeGhEWsG034DrZ7xZPR5uvhVY/edit?usp=sharing)
+
+In **2026**, the implementation was refactored for strict production memory safety, standard C conformance, formal mathematical proof, and cross-language portability (C, JS, Python, Java, C#), stress-validated on 40,000 randomized expressions across three independent verification tiers.

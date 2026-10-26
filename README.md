@@ -48,7 +48,8 @@ This repository archives original algorithmic contributions designed to solve fo
 ### 1. 🔄 [In-Place Infix to Prefix Converter](✅%20infix%20to%20prefix/)
 *A novel dual-pointer right-to-left scan that overwrites the input buffer in-place with zero auxiliary string allocation.*
 
-- **Origin:** Designed in **Spring 2022** during Data Structures coursework; fully formalized, multi-language ported, and stress-tested in **2026**.
+- **Origin & Provenance:** Conceived and submitted as **Lab Report No. 01 (Problem 2)** in **December 2022** for Course *CSE-104: Structured Programming Lab* at the **Department of CSE, Green University of Bangladesh** (Student: Ashikur Rahman, ID: 221902131; Lecturer: Md. Abu Rumman Refat).
+  - 📑 [View Original 2022 Lab Report Presentation (Google Slides)](https://docs.google.com/presentation/d/1ogiW8eGX2eApdnQU1bEeGhEWsG034DrZ7xZPR5uvhVY/edit?usp=sharing)
 - **The Breakthrough:** Traditional textbook algorithms require 3 full string passes and an extra $O(N)$ buffer (Reverse $\rightarrow$ Postfix $\rightarrow$ Reverse). This algorithm performs the complete conversion **in-place** directly inside the original buffer using a backward read/write pointer discipline.
 - **Safety Proof:** Mathematically proves the invariant $\text{read\_idx} \le \text{write\_idx}$, guaranteeing unread data is never overwritten.
 - **Languages Provided:** C (Reference), JavaScript (Node.js), Python 3, Java, C#.
