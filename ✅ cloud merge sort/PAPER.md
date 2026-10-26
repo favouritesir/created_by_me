@@ -282,7 +282,20 @@ Cloud Sort offers a clear pedagogical alternative:
 
 ---
 
-## 8. Conclusion
+## 8. Design Evolution, Negative Results, and Future Work
+
+The conception of Cloud Sort was preceded by exploratory prototypes attempting pure in-place ($O(1)$ auxiliary space) merging:
+
+1. **In-Place Cross-Swapping (`angleSort`):**  
+   Early experiments investigated bidirectional pointer swapping across partition boundaries without allocating auxiliary headroom. Hand-simulated across physical whiteboards and door panels, this approach achieved approximately 70%–80% partial sortedness on empirical arrays. However, resolving inverted elements without buffer headroom triggered cascading displacement shifts that risked degrading worst-case runtime to $O(N^2)$ or violating strict stability.
+2. **The Asymmetric Resolution:**  
+   Recognizing that full in-place merging encounters severe displacement conflicts, the author identified the minimal auxiliary condition required to guarantee both stability and $O(N \log N)$ worst-case time: ascending strictly the left slice ($A[l..m]$) to an overhead buffer of capacity $\lceil N/2 \rceil$. This resolved the displacement paradox while completely eliminating the right-hand drain loop.
+3. **Future Research Direction:**  
+   Future research aims to extend the lessons learned from the 70%–80% in-place trials: combining Cloud Sort's asymmetric ascension with in-situ block cycling to further reduce auxiliary memory bounds towards an optimal, strictly stable $O(1)$ in-place merge sort.
+
+---
+
+## 9. Conclusion
 
 Cloud Sort refines standard merge sort by replacing the canonical $N$-sized auxiliary buffer with a caller-provided floating buffer bounded to $\lceil N/2 \rceil$. By ascending only the active left slice to the overhead cloud, the algorithm frees ground write slots, enabling in-situ merging that eliminates the ground sub-array copy, the right-partition drain loop, and the final back-copy stage.
 

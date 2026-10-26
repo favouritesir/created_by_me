@@ -10,10 +10,12 @@
 ![Arduino Uno](https://img.shields.io/badge/Hardware-Arduino_Uno_Verified-teal?style=for-the-badge&logo=arduino)
 ![Energy Saving](https://img.shields.io/badge/IoT_Energy-25%25_Less_Bus_Writes-orange?style=for-the-badge)
 [![Research Paper](https://img.shields.io/badge/Research_Paper-Read_Academic_Paper-red?style=for-the-badge&logo=googlescholar)](PAPER.md)
+[![Origin & Journey](https://img.shields.io/badge/The_Journey-Behind_The_Invention-blueviolet?style=for-the-badge&logo=bookmeter)](ORIGIN_AND_JOURNEY.md)
 
 > **Author:** Ashikur Rahman  
 > **Original Conception:** Spring 2023 (Department of Computer Science & Engineering, Green University of Bangladesh)  
 > **Full Academic Paper:** [Read the peer-review format paper (PAPER.md)](PAPER.md)  
+> **The Story & Failed Prototypes:** [Read the behind-the-scenes engineering journey (ORIGIN_AND_JOURNEY.md)](ORIGIN_AND_JOURNEY.md)  
 > **Core Philosophy:** Modernizing undergraduate sorting pedagogy by challenging legacy textbook memory waste. Replaces complex dynamic heap allocations with an overhead caller-provided floating `cloud` buffer of size $\lceil N/2 \rceil$.
 
 ---
@@ -29,6 +31,7 @@
 8. [Mathematical Proof of In-Place Safety](#-mathematical-proof-of-in-place-safety)
 9. [Multi-Language Implementations (Clean & Separated)](#-multi-language-implementations-clean--separated)
 10. [How to Reproduce the Verification & Benchmark Suite](#-how-to-reproduce-the-verification--benchmark-suite)
+11. [The Inventor's Journey & Failed Prototypes](#-the-inventors-journey--failed-prototypes)
 
 ---
 
@@ -280,6 +283,20 @@ node "tests/test_suite.js"
 ```bash
 python -m tests.test_stress
 ```
+
+---
+
+## 🚪 The Inventor's Journey & Failed Prototypes
+
+Real algorithmic breakthroughs do not happen overnight in an IDE; they are forged through weeks of mental struggle, hand-drawn pointer traces on notebooks, whiteboards, and dry-erase markers scribbled across door panels.
+
+Before Cloud Sort succeeded, several alternative ideas were conceived, implemented, and tested:
+- **`angleSort` & Cross-Swap Experiment:** A pure in-place merge attempting bufferless $O(1)$ sorting. Achieved ~70–80% sortedness before hitting the physical limit of element displacement collisions.
+- **`queueSort` (Rotational Merge):** Queue-based rotational step merging.
+- **"Wave Sort" Concept:** Alternating crest-and-trough element sweeps.
+
+👉 **[Read the Full Behind-the-Scenes Story in ORIGIN_AND_JOURNEY.md &raquo;](ORIGIN_AND_JOURNEY.md)**  
+📂 **[Explore the Original Prototype Code Archive (`prototypes/`) &raquo;](prototypes/)**
 
 ---
 
