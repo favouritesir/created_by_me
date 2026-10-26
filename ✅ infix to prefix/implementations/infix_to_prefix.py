@@ -1,7 +1,8 @@
 # ============================================================================
 # IN-PLACE INFIX TO PREFIX CONVERTER - Python Implementation
-# Author  : Ashikur Rahman (2026)
-# Concept : O(N) Time, O(1) auxiliary string space (two-pointer, right-to-left)
+# Original Algorithm : Ashikur Rahman (Created: Spring 2022)
+# Refactored & Ported: Ashikur Rahman (2026)
+# Concept            : O(N) Time, O(1) auxiliary string space (two-pointer, right-to-left)
 #
 # Note: Python strings are immutable, so the in-place technique operates on a
 # character list that stands in for the original C-style string buffer.

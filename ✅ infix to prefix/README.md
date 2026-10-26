@@ -9,6 +9,11 @@
 ![Data Structure](https://img.shields.io/badge/Data_Structure-Stack-orange?style=for-the-badge)
 ![Space Complexity](https://img.shields.io/badge/String_Space-O(1)-blue?style=for-the-badge)
 ![Tests](https://img.shields.io/badge/Tested-40,000_expressions-brightgreen?style=for-the-badge)
+![Created](https://img.shields.io/badge/Original_Design-Spring_2022-purple?style=for-the-badge)
+
+> **Author:** Ashikur Rahman  
+> **Original Algorithm Designed:** Spring 2022 (Data Structures Coursework)  
+> **Refactored, Multi-Language Ports & 3-Layer Testing:** 2026  
 
 A high-performance, memory-optimized **In-Place Infix to Prefix Converter** in C. Unlike traditional textbook algorithms that allocate secondary arrays and perform multiple string reversals, this implementation utilizes a **backward two-pointer (Read/Write)** technique to overwrite the input buffer in-place with **zero auxiliary string allocation ($O(1)$ extra string memory)**.
 

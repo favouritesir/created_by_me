@@ -1,7 +1,8 @@
 // ============================================================================
 // IN-PLACE INFIX TO PREFIX CONVERTER - C# Implementation
-// Author  : Ashikur Rahman (2026)
-// Concept : O(N) Time, O(1) auxiliary string space (two-pointer, right-to-left)
+// Original Algorithm : Ashikur Rahman (Created: Spring 2022)
+// Refactored & Ported: Ashikur Rahman (2026)
+// Concept            : O(N) Time, O(1) auxiliary string space (two-pointer, right-to-left)
 // ============================================================================
 
 using System;

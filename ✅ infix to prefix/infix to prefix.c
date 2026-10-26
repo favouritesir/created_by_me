@@ -1,7 +1,8 @@
 // ============================================================================
 // IN-PLACE INFIX TO PREFIX CONVERTER
-// Author       : Ashikur Rahman (Refactored 2026)
-// Concept      : O(N) Time, O(1) Output Space using Two-Pointer Read/Write
+// Original Algorithm : Ashikur Rahman (Created: Spring 2022)
+// Refactored & Tested: Ashikur Rahman (2026)
+// Concept            : O(N) Time, O(1) Auxiliary String Space (Dual-Pointer)
 // ============================================================================
 
 #include <stdio.h>
