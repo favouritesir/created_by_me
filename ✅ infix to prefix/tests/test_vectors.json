@@ -1,0 +1,32 @@
+{
+  "description": "Validated test vectors for the In-Place Infix to Prefix converter. Every pair below was verified against an independent 3-pass reference implementation AND numerically (infix evaluation == prefix evaluation).",
+  "tests": [
+    { "infix": "a+b",                "prefix": "+ab" },
+    { "infix": "a+b*c",              "prefix": "+a*bc" },
+    { "infix": "A+B*C/D-E",          "prefix": "-+A/*BCDE" },
+    { "infix": "(a-b/c)*(a/k-l)",    "prefix": "*-a/bc-/akl" },
+    { "infix": "(A+B)*C-(D-E)*(F+G)","prefix": "-*+ABC*-DE+FG" },
+    { "infix": "((A+B)*C-(D-E))^(F+G)","prefix": "^-*+ABC-DE+FG" },
+    { "infix": "a+b*c^d-e",          "prefix": "-+a*b^cde" },
+    { "infix": "((a+b))",            "prefix": "+ab" },
+    { "infix": "A-B-C",              "prefix": "--ABC" },
+    { "infix": "A/B/C",              "prefix": "//ABC" },
+    { "infix": "A^B^C",              "prefix": "^A^BC" },
+    { "infix": "A^B^C^D",            "prefix": "^A^B^CD" },
+    { "infix": "(A^B)^C",            "prefix": "^^ABC" },
+    { "infix": "a*(b+c)/d",          "prefix": "/*a+bcd" },
+    { "infix": "A*B+C/D",            "prefix": "+*AB/CD" },
+    { "infix": "(a+b)*(c+d)",        "prefix": "*+ab+cd" },
+    { "infix": "(A+B)*C",            "prefix": "*+ABC" },
+    { "infix": "(A+B+C)*(D+E)",      "prefix": "*++ABC+DE" },
+    { "infix": "a+b+c+d",            "prefix": "+++abcd" },
+    { "infix": "a-b-c-d-e-f",        "prefix": "-----abcdef" },
+    { "infix": "a*b*c*d*e*f",        "prefix": "*****abcdef" },
+    { "infix": "a^b^c^d^e",          "prefix": "^a^b^c^de" },
+    { "infix": "(((((a)))))",        "prefix": "a" },
+    { "infix": "a",                  "prefix": "a" },
+    { "infix": "(a+(b*(c-(d/(e%f)))))","prefix": "+a*b-c/d%ef" },
+    { "infix": "((a+b)+(c+d))+((e+f)+(g+h))","prefix": "+++ab+cd++ef+gh" },
+    { "infix": "A-B/(C*D^E)",        "prefix": "-A/B*C^DE" }
+  ]
+}

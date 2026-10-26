@@ -1,0 +1,12 @@
+# Operating System / Cloud Storage files
+desktop.ini
+Thumbs.db
+.DS_Store
+
+# Executables & object files
+*.exe
+*.o
+*.obj
+
+# Publication drafts, research papers, and articles (Private / not pushed to GitHub)
+drafts/
