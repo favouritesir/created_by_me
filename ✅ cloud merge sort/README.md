@@ -19,15 +19,14 @@
 ## 📖 Table of Contents
 1. [The Pedagogical Breakthrough: Why Cloud Sort?](#-the-pedagogical-breakthrough-why-cloud-sort)
 2. [The Core Mechanics: Why `arr[l..m]` Ascends to the Cloud](#-the-core-mechanics-why-arrlm-ascends-to-the-cloud)
-3. [Visual Architecture & Mermaid Flowcharts](#-visual-architecture--mermaid-flowcharts)
-4. [The Zero-Move Right Tail Property](#-the-zero-move-right-tail-property)
-5. [Pure C Code: Zero `malloc`, Zero Boilerplate](#-pure-c-code-zero-malloc-zero-boilerplate)
-6. [Core Loop Economy (3 Loops vs. 4 Loops)](#-core-loop-economy-3-loops-vs-4-loops)
-7. [Comparative Analysis: Cloud Sort vs Standard vs QuickSort vs TimSort](#-comparative-analysis)
-8. [Embedded & IoT Hardware Benchmark: Memory, Power & Battery Lifespan](#-embedded--iot-hardware-benchmark-memory-power--battery-lifespan)
-9. [Mathematical Proof of In-Place Safety](#-mathematical-proof-of-in-place-safety)
-10. [Multi-Language Implementations (Clean & Separated)](#-multi-language-implementations-clean--separated)
-11. [How to Reproduce the Verification & Benchmark Suite](#-how-to-reproduce-the-verification--benchmark-suite)
+3. [The Zero-Move Right Tail Property](#-the-zero-move-right-tail-property)
+4. [Pure C Code: Zero `malloc`, Zero Boilerplate](#-pure-c-code-zero-malloc-zero-boilerplate)
+5. [Core Loop Economy (3 Loops vs. 4 Loops)](#-core-loop-economy-3-loops-vs-4-loops)
+6. [Comparative Analysis: Cloud Sort vs Standard vs QuickSort vs TimSort](#-comparative-analysis)
+7. [Embedded & IoT Hardware Benchmark: Memory, Power & Battery Lifespan](#-embedded--iot-hardware-benchmark-memory-power--battery-lifespan)
+8. [Mathematical Proof of In-Place Safety](#-mathematical-proof-of-in-place-safety)
+9. [Multi-Language Implementations (Clean & Separated)](#-multi-language-implementations-clean--separated)
+10. [How to Reproduce the Verification & Benchmark Suite](#-how-to-reproduce-the-verification--benchmark-suite)
 
 ---
 
@@ -79,61 +78,6 @@ In Cloud Sort:
    Because the destination pointer starts writing at `arr[l++]`. If `arr[l..m]` remained on the ground, writing the first smaller element into `arr[l]` would **permanently overwrite and destroy** unread data. Lifting `arr[l..m]` to the overhead cloud clears indices $l$ through $m$ on the ground, creating safe write headroom!
 4. **Why do `arr[m+1..r]` elements stay on the ground?**  
    Because the read pointer $rp$ starts at $m+1$, which is always ahead of the destination write pointer $l$ (starting at $l$). Ground elements are safely read *before* the write pointer ever reaches their position.
-
----
-
-## 🎨 Visual Architecture & Mermaid Flowcharts
-
-### 1. Architectural Interaction Flowchart
-```mermaid
-graph TD
-    subgraph OVERHEAD_CLOUD ["☁️ Floating Overhead Cloud Buffer"]
-        C0["cloud[0]"]
-        C1["cloud[1]"]
-        C_dots["..."]
-        CLast["cloud[step - 1]"]
-    end
-
-    subgraph GROUND_ARRAY ["🌍 Primary Ground Array (arr)"]
-        subgraph VACATED_ZONE ["Vacated Ground Slots arr[l..m] (In-Place Write Target)"]
-            G0["arr[l]"]
-            G1["arr[l+1]"]
-            G_mid["arr[m]"]
-        end
-        subgraph IN_SITU_ZONE ["In-Situ Ground Elements arr[m+1..r]"]
-            R0["arr[m+1]"]
-            R1["arr[m+2]"]
-            R_last["arr[r]"]
-        end
-    end
-
-    VACATED_ZONE -- "Phase 1: Ascend arr[l..m] to free ground" --> OVERHEAD_CLOUD
-    OVERHEAD_CLOUD -- "Phase 2: Sorted Descent (cloud[lp] <= arr[rp])" --> VACATED_ZONE
-    IN_SITU_ZONE -- "Phase 2: Shift Across Ground (arr[rp] < cloud[lp])" --> VACATED_ZONE
-    IN_SITU_ZONE -. "Phase 3: ZERO MOVES (Already In Final Place)" .-> IN_SITU_ZONE
-```
-
----
-
-### 2. Core Merge Engine Flowchart (The Pure 3 Loops)
-```mermaid
-flowchart TD
-    Start([cloud_merge: arr, l, m, r, cloud]) --> Ascend["Loop 1: Ascend active slice arr[l..m] to cloud<br>while (lp <= m) cloud[step++] = arr[lp++]"]
-    
-    Ascend --> InitPointers["Initialize Pointers:<br>lp = 0 (Cloud Read), rp = m + 1 (Ground Read)"]
-    InitPointers --> CompareLoop{"Loop 2: lp < step AND rp <= r?"}
-    
-    CompareLoop -- Yes --> CheckVal{cloud[lp] <= arr[rp]?}
-    CheckVal -- Yes --> WriteCloud["Descend from cloud:<br>arr[l++] = cloud[lp++]"] --> CompareLoop
-    CheckVal -- No --> WriteGround["Shift across ground:<br>arr[l++] = arr[rp++]"] --> CompareLoop
-    
-    CompareLoop -- No --> DrainCloud{"Loop 3: lp < step?"}
-    DrainCloud -- Yes --> UnloadCloud["Unload remaining cloud:<br>arr[l++] = cloud[lp++]"] --> DrainCloud
-    DrainCloud -- No --> CheckRight{"Remaining ground elements arr[rp..r]?"}
-    CheckRight -- Yes --> ZeroMove["✨ ZERO MOVES REQUIRED!<br>Remaining ground elements are already in final sorted indices!"]
-    ZeroMove --> Done([Merge Complete])
-    CheckRight -- No --> Done
-```
 
 ---
 
@@ -193,7 +137,7 @@ int main() {
 
 ## 🔍 Core Loop Economy (3 Loops vs. 4 Loops)
 
-### 🎯 ক্লাউড মার্জ সোর্টের মূল অপটিমাইজেশন (The Core Optimization)
+### 🎯 The Core Optimization
 
 ```text
 // Standard Merge Sort: 4 loops
