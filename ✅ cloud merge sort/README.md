@@ -23,15 +23,16 @@
 ## 📖 Table of Contents
 1. [The Pedagogical Breakthrough: Why Cloud Sort?](#-the-pedagogical-breakthrough-why-cloud-sort)
 2. [The Core Mechanics: Why `arr[l..m]` Ascends to the Cloud](#-the-core-mechanics-why-arrlm-ascends-to-the-cloud)
-3. [The Zero-Move Right Tail Property](#-the-zero-move-right-tail-property)
-4. [Pure C Code: Zero `malloc`, Zero Boilerplate](#-pure-c-code-zero-malloc-zero-boilerplate)
-5. [Core Loop Economy (3 Loops vs. 4 Loops)](#-core-loop-economy-3-loops-vs-4-loops)
-6. [Comparative Analysis: Cloud Sort vs Standard vs QuickSort vs TimSort](#-comparative-analysis)
-7. [Embedded & IoT Hardware Benchmark: Memory, Power & Battery Lifespan](#-embedded--iot-hardware-benchmark-memory-power--battery-lifespan)
-8. [Mathematical Proof of In-Place Safety](#-mathematical-proof-of-in-place-safety)
-9. [Multi-Language Implementations (Clean & Separated)](#-multi-language-implementations-clean--separated)
-10. [How to Reproduce the Verification & Benchmark Suite](#-how-to-reproduce-the-verification--benchmark-suite)
-11. [The Inventor's Journey & Failed Prototypes](#-the-inventors-journey--failed-prototypes)
+3. [Algorithmic Paradigms & Core Techniques](#-algorithmic-paradigms--core-techniques)
+4. [The Zero-Move Right Tail Property](#-the-zero-move-right-tail-property)
+5. [Pure C Code: Zero `malloc`, Zero Boilerplate](#-pure-c-code-zero-malloc-zero-boilerplate)
+6. [Core Loop Economy (3 Loops vs. 4 Loops)](#-core-loop-economy-3-loops-vs-4-loops)
+7. [Comparative Analysis: Cloud Sort vs Standard vs QuickSort vs TimSort](#-comparative-analysis)
+8. [Embedded & IoT Hardware Benchmark: Memory, Power & Battery Lifespan](#-embedded--iot-hardware-benchmark-memory-power--battery-lifespan)
+9. [Mathematical Proof of In-Place Safety](#-mathematical-proof-of-in-place-safety)
+10. [Multi-Language Implementations (Clean & Separated)](#-multi-language-implementations-clean--separated)
+11. [How to Reproduce the Verification & Benchmark Suite](#-how-to-reproduce-the-verification--benchmark-suite)
+12. [The Inventor's Journey & Failed Prototypes](#-the-inventors-journey--failed-prototypes)
 
 ---
 
@@ -83,6 +84,23 @@ In Cloud Sort:
    Because the destination pointer starts writing at `arr[l++]`. If `arr[l..m]` remained on the ground, writing the first smaller element into `arr[l]` would **permanently overwrite and destroy** unread data. Lifting `arr[l..m]` to the overhead cloud clears indices $l$ through $m$ on the ground, creating safe write headroom!
 4. **Why do `arr[m+1..r]` elements stay on the ground?**  
    Because the read pointer $rp$ starts at $m+1$, which is always ahead of the destination write pointer $l$ (starting at $l$). Ground elements are safely read *before* the write pointer ever reaches their position.
+
+---
+
+## 🧩 Algorithmic Paradigms & Core Techniques
+
+Cloud Sort is not a single heuristic; it is the synergistic synthesis of **seven foundational computer science techniques**:
+
+| Paradigm / Technique | Role in Cloud Sort | Academic & Physical Benefit |
+| :--- | :--- | :--- |
+| **1. Divide-and-Conquer Paradigm** | Recursively bisects the array intervals ($m = \lfloor(l+r)/2\rfloor$) down to base units ($l \ge r$). | Preserves optimal, predictable $O(N \log N)$ worst-case time complexity. |
+| **2. Asymmetric Dual-Plane Memory Hierarchy** | Breaks the traditional textbook $N$-sized symmetric buffer by ascending **only** the active left slice ($arr[l..m]$) to an overhead cloud of size $\lceil N/2 \rceil$. | Halves the auxiliary buffer requirement (50% memory savings) and cuts initial copy operations by half. |
+| **3. In-Situ Ground Placement** | Vacates ground array writing slots ($arr[l..m]$) on the primary container, using them directly as the sorted merge destination. | Eliminates the need for a separate destination array and removes the entire back-copy loop. |
+| **4. Three-Pointer Directional Scanning** | Coordinates two read pointers ($lp$ on the cloud, $rp$ on the ground) and one in-situ write pointer ($l$ on the ground). | Performs simultaneous sorted comparisons in $O(1)$ amortized time per element. |
+| **5. Read-Before-Write Non-Collision Invariant** | Enforces the inductive mathematical discipline $wp_t \le rp_t$ throughout Phase 2. | Mathematically guarantees zero unread element destruction without boundary checks or memory locks. |
+| **6. The Zero-Move Right Tail Property** | Exploits the invariant that when the cloud exhausts, remaining ground elements already satisfy $arr[j] \ge \max(\text{placed})$ and reside in their exact sorted indices. | Completely eliminates the second drain loop and back-copy passes (cutting 1 full loop and 25% of data moves). |
+| **7. Caller-Buffer Paradigm (Zero Heap Allocation)** | Decouples memory management from recursive sorting. The caller passes a single floating buffer of size $\lceil N/2 \rceil$. | Eliminates all internal `malloc`/`free` calls, preventing memory fragmentation and stack-heap collisions on embedded systems. |
+| **8. Adaptive Linear Hook (Optional Short-Circuit)** | Incorporates `if (arr[m] <= arr[m+1]) return;` to detect pre-sorted runs in $O(1)$ time. | Short-circuits recursion on pre-sorted data to linear $O(N)$ best-case time. |
 
 ---
 

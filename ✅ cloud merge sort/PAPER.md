@@ -79,6 +79,16 @@ Furthermore, by construction, the write pointer $wp$ at step $t$ satisfies $wp =
 $$wp = l + (m - l + 1) + rp - m - 1 = rp$$
 Because the destination write pointer $wp$ coincides identically with the source read pointer $rp$, each element $A[j]$ for $j \in [rp, r]$ already resides at index $j$. Any transfer would compute $A[j] = A[j]$ (an identity assignment). Consequently, the right-partition drain loop is safely omitted. $\blacksquare$
 
+### 2.4 Algorithmic Taxonomy & Integrated Techniques
+Cloud Sort synthesizes multiple foundational computer science paradigms into a unified, lightweight sorting engine:
+1. **Divide-and-Conquer Recurrence:** Partitions intervals down to singletons ($m = \lfloor (l+r)/2 \rfloor$), preserving standard $T(N) = 2T(N/2) + \Theta(N)$ optimal logarithmic recursion depth.
+2. **Asymmetric Dual-Plane Memory Hierarchy:** Transcends canonical symmetric buffers by ascending strictly the left slice ($A[l..m]$) to an overhead cloud of size $\lceil N/2 \rceil$, cutting memory footprint and initial copy passes by half.
+3. **In-Situ Ground Placement:** Reutilizes vacated ground slots ($A[l..m]$) as the direct destination container, eliminating the need for a secondary destination array or an extra back-copy loop.
+4. **Three-Pointer Directional Scanning:** Unidirectionally tracks two source read indices ($lp$ on cloud, $rp$ on ground) and one in-situ write index ($wp$ on ground) in $O(1)$ amortized comparison time.
+5. **Read-Before-Write Non-Collision Invariant:** Mathematically guarantees $wp_t \le rp_t$, ensuring in-situ writes never corrupt unread ground elements.
+6. **Zero-Move Right Tail Property:** Eliminates the ground drain loop by recognizing that remaining ground elements are already pre-sorted and in their terminal positions.
+7. **Caller-Buffer Memory Discipline:** Completely avoids internal dynamic allocation (`malloc`/`free`), eliminating runtime fragmentation and allocation syscall latency on embedded microcontrollers.
+
 ---
 
 ## 3. Mathematical Proof of In-Place Memory Safety
