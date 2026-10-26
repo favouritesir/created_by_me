@@ -61,7 +61,7 @@ This repository archives original algorithmic contributions designed to solve fo
 ---
 
 ### 2. 🌩️ [Cloud Merge Sort](✅%20cloud%20merge%20sort/)
-*An overhead single-buffer in-situ merge sort challenging standard textbook memory waste by reducing auxiliary space to $\lfloor N/2 \rfloor$ and eliminating the right-hand drain loop.*
+*An overhead single-buffer in-situ merge sort challenging standard textbook memory waste by reducing auxiliary space to $\lceil N/2 \rceil$, saving 25% memory bus energy, and eliminating the right-hand drain loop.*
 
 - **Origin & Provenance:** Conceived in **Spring 2023** during the *Data Structures & Algorithms* semester at the **Department of CSE, Green University of Bangladesh** (Ashikur Rahman).
 - **The Breakthrough:** Standard textbooks mandate allocating $N$ auxiliary slots and executing 4 loops (with $2N$ data moves per merge). Cloud Merge Sort introduces an **Asymmetric Overhead Interaction**: the active sub-range `arr[l..m]` temporarily ascends to a floating overhead $\lceil N/2 \rceil$ "cloud" buffer to vacate ground writing slots, while `arr[m+1..r]` remains directly on the ground in-situ.
@@ -80,7 +80,7 @@ This repository is continuously expanding with ongoing research and original alg
 | Project | Domain | Core Innovation / Research Goal | Status |
 | :--- | :--- | :--- | :---: |
 | **In-Place Infix to Prefix** | Compiler Design & Expression Parsing | Dual-pointer backward in-place conversion with $O(1)$ auxiliary string space. | 🏆 Published (DOI: 10.5281/zenodo.23657544) |
-| **Cloud Merge Sort** | Sorting Pedagogy & Memory Optimization | Overhead-buffer in-situ merge sort with $\lfloor N/2 \rfloor$ space and zero-move right tail. | ✅ Complete & Verified |
+| **Cloud Merge Sort** | Sorting Pedagogy & Embedded Optimization | Overhead-buffer in-situ merge sort with $\lceil N/2 \rceil$ space, 25% energy savings, and zero-move tail. | ✅ Complete & Verified |
 | **JSON Boundary Tracker** | High-Throughput Parsing | Zero-copy stream tokenization and lexical boundary detection without AST heap overhead. | 🔬 In Design |
 | **Adaptive In-Place Cache Eviction** | Operating Systems & Caching | Low-overhead pointer-indexed cache replacement for resource-constrained micro-kernels. | 💡 Planned |
 | **Bounded Stack Math Evaluator** | Embedded Firmware | Fixed-depth evaluation of mathematical trees with guaranteed zero-overflow guarantees. | 💡 Planned |
@@ -93,22 +93,38 @@ This repository is continuously expanding with ongoing research and original alg
 created_by_me/
 │
 ├── README.md                          # Main repository overview & research catalog
-├── .gitignore                         # Excludes OS metadata & private publication drafts
+├── .gitignore                         # Excludes bytecode, OS metadata & private drafts
 │
-└── ✅ infix to prefix/                 # Project: In-Place Infix to Prefix Converter
-    ├── README.md                      # Comprehensive academic & practical documentation
-    ├── infix to prefix.c              # Core reference implementation in C (memory-guarded)
+├── ✅ infix to prefix/                 # Project 1: In-Place Infix to Prefix Converter
+│   ├── README.md                      # Comprehensive academic & practical documentation
+│   ├── infix to prefix.c              # Core reference implementation in C (memory-guarded)
+│   │
+│   ├── implementations/               # Idiomatic multi-language ports
+│   │   ├── infix_to_prefix.js         # JavaScript (Node.js) implementation
+│   │   ├── infix_to_prefix.py         # Python 3 implementation
+│   │   ├── InfixToPrefix.java         # Java implementation
+│   │   └── InfixToPrefix.cs           # C# / .NET implementation
+│   │
+│   └── tests/                         # Public test suite & validation harness
+│       ├── test_vectors.json          # 27 verified golden test vectors
+│       ├── test_suite.js              # Vector suite + differential random harness (JS)
+│       └── test_stress.py             # Full 40,000-expression 3-layer stress harness (Python)
+│
+└── ✅ cloud merge sort/                # Project 2: Cloud Merge Sort (Overhead-Buffer In-Situ)
+    ├── README.md                      # Comprehensive theory, flowcharts & hardware analysis
+    ├── cloud_merge_sort.c             # Pure Cloud Merge Sort in C (Reference)
+    ├── standard_merge_sort.c          # Pure Standard Merge Sort in C (Canonical comparison)
     │
-    ├── implementations/               # Idiomatic multi-language ports
-    │   ├── infix_to_prefix.js         # JavaScript (Node.js) implementation
-    │   ├── infix_to_prefix.py         # Python 3 implementation
-    │   ├── InfixToPrefix.java         # Java implementation
-    │   └── InfixToPrefix.cs           # C# / .NET implementation
+    ├── implementations/               # Production multi-language standalone implementations
+    │   ├── cloud_merge_sort.js        # Pure Cloud Merge Sort (JavaScript)
+    │   ├── standard_merge_sort.js     # Pure Standard Merge Sort (JavaScript)
+    │   ├── cloud_merge_sort.py        # Pure Cloud Merge Sort (Python 3)
+    │   └── standard_merge_sort.py     # Pure Standard Merge Sort (Python 3)
     │
-    └── tests/                         # Public test suite & validation harness
-        ├── test_vectors.json          # 27 verified golden test vectors
-        ├── test_suite.js              # Vector suite + differential random harness (JS)
-        └── test_stress.py             # Full 40,000-expression 3-layer stress harness (Python)
+    └── tests/                         # Verification & empirical hardware harness
+        ├── test_suite.js              # 5-layer test suite: edge-cases, 10k random & moves
+        ├── test_stress.py             # 10,000-array differential test vs Python TimSort
+        └── test_arduino_benchmark.py  # Arduino Uno / IoT RAM & SRAM bus energy benchmark
 ```
 
 ---
@@ -117,9 +133,8 @@ created_by_me/
 
 Anyone can independently reproduce and verify the algorithms in this repository in seconds:
 
+### 1. In-Place Infix to Prefix Converter
 ```bash
-# Clone the repository
-git clone https://github.com/favouritesir/created_by_me.git
 cd created_by_me/"✅ infix to prefix"
 
 # Run fast JavaScript validation (vectors + differential + invariants)
@@ -127,6 +142,20 @@ node tests/test_suite.js
 
 # Run full 3-layer Python stress harness (40,000 expressions)
 python tests/test_stress.py
+```
+
+### 2. Cloud Merge Sort
+```bash
+cd created_by_me/"✅ cloud merge sort"
+
+# Run 5-layer JavaScript verification (edge cases, 10,000 arrays, stability, move counters)
+node tests/test_suite.js
+
+# Run Python differential stress test (10,000 arrays vs native C-Timsort)
+python -m tests.test_stress
+
+# Run Arduino Uno & Embedded IoT RAM + Power/Energy Benchmark
+python tests/test_arduino_benchmark.py
 ```
 
 ---
