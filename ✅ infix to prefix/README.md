@@ -295,6 +295,7 @@ You do not have to trust the numbers in this README — reproduce them in second
 | `tests/test_vectors.json` | 27 hand-published & numerically verified expression vectors (precedence, left/right associativity, power chains, deep nesting, multi-digit operands) |
 | `tests/test_suite.js` | **L1a** vector suite + **L1b** differential test vs. an independent 3-pass reference (3,000 random expressions, seeded & reproducible) + **L2** in-place corruption/underflow invariants |
 | `tests/test_stress.py` | The full harness from the Robustness Report: **L1 + L2 + L3** (numeric semantic evaluations) over **40,000** random expressions, with reproducible PRNG seed |
+| `tests/test_arduino_benchmark.py` | **Hardware & Microcontroller Benchmark:** Profiles RAM against the **ATmega328P (Arduino Uno, 2 KB SRAM)**; validates 57.1%–66.5% savings and OOM crash thresholds matching paper Table 8 |
 
 ### Run (JavaScript — instant, no setup)
 ```bash
@@ -320,6 +321,17 @@ Expected output shape:
 L1 | In-Place == Independent 3-pass Reference  : 40,000 (100.0000%)
 L2 | In-place overwrite corruption events      : 0
 L3 | Numeric: eval(infix) == eval(prefix out)  : 30,509 passed
+```
+
+### Run (Arduino Uno / Hardware Memory Benchmark)
+```bash
+python tests/test_arduino_benchmark.py
+```
+Expected output (validating Section 6.4 & Table 8 of research paper):
+```text
+Tokens (N)  | Textbook RAM   | In-Place RAM   | RAM Savings  | Arduino Uno (Textbook)   | Arduino Uno (Proposed In-Place)
+512         | 1600       B   | 576        B   | 64.0   %     | CRASH (OOM Overflow)     | PASS (924 B headroom)
+1024        | 3136       B   | 1088       B   | 65.3   %     | CRASH (OOM Overflow)     | PASS (412 B headroom)
 ```
 
 ### Reproducing the Robustness Report numbers
