@@ -11,7 +11,8 @@
  * ============================================================================
  */
 
-const { cloudMergeSort, standardMergeSort } = require('../implementations/cloud_merge_sort.js');
+const { cloudMergeSort } = require('../implementations/cloud_merge_sort.js');
+const { standardMergeSort } = require('../implementations/standard_merge_sort.js');
 
 // Seeded PRNG for reproducible test runs
 function mulberry32(a) {

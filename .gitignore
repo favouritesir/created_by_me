@@ -8,5 +8,9 @@ Thumbs.db
 *.o
 *.obj
 
+# Python bytecode & cache
+__pycache__/
+*.pyc
+
 # Publication drafts, research papers, and articles (Private / not pushed to GitHub)
 drafts/

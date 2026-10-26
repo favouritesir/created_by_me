@@ -12,7 +12,8 @@ Tests:
 
 import random
 import time
-from implementations.cloud_merge_sort import cloud_merge_sort, standard_merge_sort
+from implementations.cloud_merge_sort import cloud_merge_sort
+from implementations.standard_merge_sort import standard_merge_sort
 
 def run_tests():
     random.seed(2026)
