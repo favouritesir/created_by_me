@@ -111,7 +111,9 @@ Let:
 - `write_idx`: The pointer writing characters back into the buffer from right to left (starts at `len - 1`).
 
 ### Mathematical Invariant:
-$$\text{read\_idx} \le \text{write\_idx}$$
+```text
+read_idx <= write_idx   (at all times)
+```
 
 1. **Total Characters Written $\le$ Total Characters Read:** Every character written to the buffer is either the current operand just read, or an operator previously popped from the stack. You can never write more characters than you have read.
 2. **Parentheses are dropped:** Every time a `)` or `(` is read, `read_idx` decreases, but `write_idx` does not write them to the array. This creates a slack gap where `write_idx` lags behind (to the right of) `read_idx`.
@@ -126,29 +128,29 @@ $$\text{read\_idx} \le \text{write\_idx}$$
 ## 🚶 Algorithm Steps
 
 1. **Initialize:**
-   - Measure string length $L = \text{strlen}(str)$.
-   - Set $\text{read\_idx} = L - 1$ and $\text{write\_idx} = L - 1$.
+   - Measure string length `L = strlen(str)`.
+   - Set `read_idx = L - 1` and `write_idx = L - 1`.
    - Initialize an empty operator stack.
-2. **Backward Scan ($\text{read\_idx} \ge 0$):**
-   - Let $C = str[\text{read\_idx}]$.
+2. **Backward Scan (`read_idx >= 0`):**
+   - Let `C = str[read_idx]`.
    - **Case 1: Closing Parenthesis `)`**
-     - Push $C$ onto the operator stack.
+     - Push `C` onto the operator stack.
    - **Case 2: Opening Parenthesis `(`**
-     - Pop operators from stack and write them to $str[\text{write\_idx}--]$ until matching `)` is popped. Drop both parentheses.
+     - Pop operators from stack and write them to `str[write_idx--]` until matching `)` is popped. Drop both parentheses.
    - **Case 3: Operator (`+`, `-`, `*`, `/`, `%`, `^`)**
      - Handle Associativity correctly during Right-to-Left scan:
-       - **Left-Associative** (`+`, `-`, `*`, `/`, `%`): Pop from stack while $\text{priority}(C) < \text{priority}(\text{stack.top()})$.
-       - **Right-Associative** (`^`): Pop from stack while $\text{priority}(C) \le \text{priority}(\text{stack.top()})$.
-     - Push $C$ onto the stack.
+       - **Left-Associative** (`+`, `-`, `*`, `/`, `%`): Pop from stack while `priority(C) < priority(stack.top())`.
+       - **Right-Associative** (`^`): Pop from stack while `priority(C) <= priority(stack.top())`.
+     - Push `C` onto the stack.
    - **Case 4: Operand (alphanumeric)**
-     - Write directly to $str[\text{write\_idx}--] = C$.
-   - Decrement $\text{read\_idx}$.
+     - Write directly to `str[write_idx--] = C`.
+   - Decrement `read_idx`.
 3. **Flush Stack:**
-   - Pop remaining operators from the stack and write each valid operator to $str[\text{write\_idx}--]$.
+   - Pop remaining operators from the stack and write each valid operator to `str[write_idx--]`.
 4. **Final Shift & Null Termination:**
-   - Compute new length $\text{new\_len} = (L - 1) - \text{write\_idx}$.
-   - Shift the resulting prefix string located at $str[\text{write\_idx} + 1 \dots L - 1]$ to $str[0 \dots \text{new\_len} - 1]$.
-   - Append null terminator `\0` at $str[\text{new\_len}]$.
+   - Compute new length `new_len = (L - 1) - write_idx`.
+   - Shift the resulting prefix string located at `str[write_idx + 1 ... L - 1]` to `str[0 ... new_len - 1]`.
+   - Append null terminator `\0` at `str[new_len]`.
 
 ---
 
@@ -276,7 +278,7 @@ The core algorithm (right-to-left two-pointer in-place conversion) is language-i
 | `implementations/InfixToPrefix.java` | **Java** | `javac implementations/InfixToPrefix.java && java InfixToPrefix` |
 | `implementations/InfixToPrefix.cs` | **C# / .NET** | compile with csc / dotnet and run |
 
-> **Note on immutability:** JavaScript and Python strings are immutable, so those ports operate on a *character array* that stands in for the C-style buffer. The read/write pointer discipline — and the mathematical invariant $\text{read\_idx} \le \text{write\_idx}$ — is identical in every port.
+> **Note on immutability:** JavaScript and Python strings are immutable, so those ports operate on a *character array* that stands in for the C-style buffer. The read/write pointer discipline — and the mathematical invariant `read_idx <= write_idx` — is identical in every port.
 
 All ports were verified against the same **27-vector test suite** (`tests/test_vectors.json`): the JavaScript, Python and C# ports were each executed natively and produce identical output; the Java port is a direct translation of the same verified logic.
 

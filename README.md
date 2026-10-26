@@ -51,7 +51,7 @@ This repository archives original algorithmic contributions designed to solve fo
 - **Origin & Provenance:** Conceived and submitted as **Lab Report No. 01 (Problem 2)** in **December 2022** for Course *CSE-104: Structured Programming Lab* at the **Department of CSE, Green University of Bangladesh** (Student: Ashikur Rahman, ID: 221902131; Lecturer: Md. Abu Rumman Refat).
   - 📑 [View Original 2022 Lab Report Presentation (Google Slides)](https://docs.google.com/presentation/d/1ogiW8eGX2eApdnQU1bEeGhEWsG034DrZ7xZPR5uvhVY/edit?usp=sharing)
 - **The Breakthrough:** Traditional textbook algorithms require 3 full string passes and an extra $O(N)$ buffer (Reverse $\rightarrow$ Postfix $\rightarrow$ Reverse). This algorithm performs the complete conversion **in-place** directly inside the original buffer using a backward read/write pointer discipline.
-- **Safety Proof:** Mathematically proves the invariant $\text{read\_idx} \le \text{write\_idx}$, guaranteeing unread data is never overwritten.
+- **Safety Proof:** Mathematically proves the invariant `read_idx <= write_idx`, guaranteeing unread data is never overwritten.
 - **Languages Provided:** C (Reference), JavaScript (Node.js), Python 3, Java, C#.
 - **Robustness:** Validated across **40,000 randomized expressions** across 3 independent tiers with **0% corruption and 100.00% accuracy**.
 - 👉 **[Explore Project & Full Documentation &raquo;](✅%20infix%20to%20prefix/)**
@@ -120,7 +120,7 @@ python tests/test_stress.py
 **Ashikur Rahman**  
 *Computer Systems & Algorithms Researcher / Software Engineer*  
 - **GitHub:** [@favouritesir](https://github.com/favouritesir)  
-- **Email:** [gub221902131@gmail.com](mailto:gub221902131@gmail.com)  
+- **Email:** [ashikur.gub@gmail.com](mailto:ashikur.gub@gmail.com)  
 
 ---
 
