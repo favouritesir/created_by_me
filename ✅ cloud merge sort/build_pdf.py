@@ -128,6 +128,23 @@ hr {
     margin: 20px 0;
 }
 
+.preprint-banner {
+    border-bottom: 1.5px solid #00599c;
+    padding-bottom: 6px;
+    margin-bottom: 18px;
+    font-size: 9pt;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #444;
+    text-align: center;
+    letter-spacing: 0.3px;
+}
+
+.preprint-banner a {
+    color: #00599c;
+    text-decoration: none;
+    font-weight: bold;
+}
+
 .katex {
     font-size: 1.05em !important;
 }
@@ -149,12 +166,27 @@ def generate():
     ]
     subprocess.run(cmd_pandoc, check=True)
 
-    # Step 2: Inject Academic CSS
+    # Step 2: Inject Academic CSS & Header Banner
     html_content = temp_html.read_text(encoding="utf-8")
     injected_html = html_content.replace(
         "</head>",
         f"<style>{ACADEMIC_CSS}</style>\n</head>"
     )
+
+    banner_html = (
+        '<div class="preprint-banner">'
+        '<strong>PREPRINT</strong> &bull; '
+        'Permanent Digital Object Identifier (DOI): '
+        '<a href="https://doi.org/10.5281/zenodo.23665548">https://doi.org/10.5281/zenodo.23665548</a> &bull; '
+        'Licensed under Creative Commons CC BY 4.0'
+        '</div>\n'
+    )
+
+    injected_html = injected_html.replace(
+        "<body>",
+        f"<body>\n{banner_html}"
+    )
+
     temp_html.write_text(injected_html, encoding="utf-8")
 
     # Step 3: Run Edge Headless to render PDF

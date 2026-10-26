@@ -1,7 +1,8 @@
 # 🚀 Created By Me | Original Algorithms & Systems Research
 
 [![Author](https://img.shields.io/badge/Author-Ashikur_Rahman-blue.svg?style=for-the-badge&logo=github)](https://github.com/favouritesir)
-[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.23657544-107c10.svg?style=for-the-badge&logo=doi)](https://doi.org/10.5281/zenodo.23657544)
+[![DOI Infix-Prefix](https://img.shields.io/badge/DOI_Infix--Prefix-10.5281%2Fzenodo.23657544-107c10.svg?style=for-the-badge&logo=doi)](https://doi.org/10.5281/zenodo.23657544)
+[![DOI Cloud-Sort](https://img.shields.io/badge/DOI_Cloud--Sort-10.5281%2Fzenodo.23665548-107c10.svg?style=for-the-badge&logo=doi)](https://doi.org/10.5281/zenodo.23665548)
 [![Established](https://img.shields.io/badge/Origin-2022_--_Present-purple.svg?style=for-the-badge)](https://github.com/favouritesir/created_by_me)
 [![Languages](https://img.shields.io/badge/Languages-C_|_JS_|_Python_|_Java_|_C%23-informational?style=for-the-badge)](https://github.com/favouritesir/created_by_me)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
@@ -64,7 +65,8 @@ This repository archives original algorithmic contributions designed to solve fo
 *An overhead single-buffer in-situ merge sort challenging standard textbook memory waste by reducing auxiliary space to $\lceil N/2 \rceil$, eliminating dynamic `malloc` overhead, saving 25% memory bus energy, and eliminating the right-hand drain loop.*
 
 - **Origin & Provenance:** Conceived in **Spring 2023** during the *Data Structures & Algorithms* semester at the **Department of CSE, Green University of Bangladesh** (Ashikur Rahman).
-  - 📄 **Academic Paper:** [Read the full research paper (PAPER.md)](✅%20cloud%20merge%20sort/PAPER.md)
+  - 📄 **Official Preprint (CERN/Zenodo DOI):** [10.5281/zenodo.23665548](https://doi.org/10.5281/zenodo.23665548)
+  - 📑 **Academic Paper:** [Read the full research paper (PAPER.md)](✅%20cloud%20merge%20sort/PAPER.md)
   - 📜 **The Inventor's Journey:** [Behind the scenes: Door-marker traces, in-place trials & breakthroughs](✅%20cloud%20merge%20sort/ORIGIN_AND_JOURNEY.md)
   - 🔬 **Prototype Archive:** [Explore original experimental code (`prototypes/`)](✅%20cloud%20merge%20sort/prototypes/)
 - **The Breakthrough:** Standard textbooks mandate allocating $N$ auxiliary slots with complex dynamic `malloc`/`free` routines and executing 4 loops. Cloud Sort allows the caller to provide a simple overhead `cloud` buffer of size $\lceil N/2 \rceil$. The active slice `arr[l..m]` temporarily ascends to the cloud to vacate ground writing slots, while `arr[m+1..r]` remains directly on the ground in-situ.
@@ -83,7 +85,7 @@ This repository is continuously expanding with ongoing research and original alg
 | Project | Domain | Core Innovation / Research Goal | Status |
 | :--- | :--- | :--- | :---: |
 | **In-Place Infix to Prefix** | Compiler Design & Expression Parsing | Dual-pointer backward in-place conversion with $O(1)$ auxiliary string space. | 🏆 Published (DOI: 10.5281/zenodo.23657544) |
-| **Cloud Sort** | Sorting Pedagogy & Embedded Optimization | Overhead-buffer in-situ merge sort with $\lceil N/2 \rceil$ space, zero-malloc simplicity, and zero-move tail. | 🏆 Paper & Benchmarks Complete |
+| **Cloud Sort** | Sorting Pedagogy & Embedded Optimization | Overhead-buffer in-situ merge sort with $\lceil N/2 \rceil$ space, zero-malloc simplicity, and zero-move tail. | 🏆 Published (DOI: 10.5281/zenodo.23665548) |
 | **JSON Boundary Tracker** | High-Throughput Parsing | Zero-copy stream tokenization and lexical boundary detection without AST heap overhead. | 🔬 In Design |
 | **Adaptive In-Place Cache Eviction** | Operating Systems & Caching | Low-overhead pointer-indexed cache replacement for resource-constrained micro-kernels. | 💡 Planned |
 | **Bounded Stack Math Evaluator** | Embedded Firmware | Fixed-depth evaluation of mathematical trees with guaranteed zero-overflow guarantees. | 💡 Planned |
