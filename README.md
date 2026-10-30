@@ -1,16 +1,16 @@
-# 🚀 Created By Me | Original Algorithms & Systems Research
+# 🚀 My Innovations | Original Algorithms & Systems Research
 
 [![Author](https://img.shields.io/badge/Author-Ashikur_Rahman-blue.svg?style=for-the-badge&logo=github)](https://github.com/favouritesir)
 [![DOI Infix-Prefix](https://img.shields.io/badge/DOI_Infix--Prefix-10.5281%2Fzenodo.23657544-107c10.svg?style=for-the-badge&logo=doi)](https://doi.org/10.5281/zenodo.23657544)
 [![DOI Cloud-Sort](https://img.shields.io/badge/DOI_Cloud--Sort-10.5281%2Fzenodo.23665548-107c10.svg?style=for-the-badge&logo=doi)](https://doi.org/10.5281/zenodo.23665548)
-[![Established](https://img.shields.io/badge/Origin-2022_--_Present-purple.svg?style=for-the-badge)](https://github.com/favouritesir/created_by_me)
-[![Languages](https://img.shields.io/badge/Languages-C_|_JS_|_Python_|_Java_|_C%23-informational?style=for-the-badge)](https://github.com/favouritesir/created_by_me)
+[![Established](https://img.shields.io/badge/Origin-2022_--_Present-purple.svg?style=for-the-badge)](https://github.com/favouritesir/my-innovations)
+[![Languages](https://img.shields.io/badge/Languages-C_|_JS_|_Python_|_Java_|_C%23-informational?style=for-the-badge)](https://github.com/favouritesir/my-innovations)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
-[![Testing Rigor](https://img.shields.io/badge/Validation-3--Tier_Stress_Tested-brightgreen.svg?style=for-the-badge)](https://github.com/favouritesir/created_by_me)
+[![Testing Rigor](https://img.shields.io/badge/Validation-3--Tier_Stress_Tested-brightgreen.svg?style=for-the-badge)](https://github.com/favouritesir/my-innovations)
 
 > *"Challenging textbook orthodoxies through aggressive memory optimization, in-place pointer discipline, and mathematical verification."*
 
-Welcome to **`created_by_me`**. Unlike conventional repositories that replicate standard textbook implementations, this repository serves as a permanent research archive for **original algorithms, novel low-level optimizations, and systems programming experiments** conceived and developed by **Ashikur Rahman**.
+Welcome to **`my-innovations`**. Unlike conventional repositories that replicate standard textbook implementations, this repository serves as a permanent research archive for **original algorithms, novel low-level optimizations, and systems programming experiments** conceived and developed by **Ashikur Rahman**.
 
 ---
 
@@ -95,7 +95,7 @@ This repository is continuously expanding with ongoing research and original alg
 ## 🏛️ Repository Structure
 
 ```text
-created_by_me/
+my-innovations/
 │
 ├── README.md                          # Main repository overview & research catalog
 ├── .gitignore                         # Excludes bytecode, OS metadata & private drafts
@@ -147,7 +147,7 @@ Anyone can independently reproduce and verify the algorithms in this repository 
 
 ### 1. In-Place Infix to Prefix Converter
 ```bash
-cd created_by_me/"✅ infix to prefix"
+cd my-innovations/"✅ infix to prefix"
 
 # Run fast JavaScript validation (vectors + differential + invariants)
 node tests/test_suite.js
@@ -158,7 +158,7 @@ python tests/test_stress.py
 
 ### 2. Cloud Merge Sort
 ```bash
-cd created_by_me/"✅ cloud merge sort"
+cd my-innovations/"✅ cloud merge sort"
 
 # Run 5-layer JavaScript verification (edge cases, 10,000 arrays, stability, move counters)
 node tests/test_suite.js
